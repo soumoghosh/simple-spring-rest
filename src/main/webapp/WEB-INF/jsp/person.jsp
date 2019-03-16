@@ -8,13 +8,13 @@
 </head>
 <body>
 	<h1>Add Person</h1>
-	<form action="">
+	<form action="person" method="post">
 		<div>
 			<div align="center">
-				First Name: <input id="firstName" type="text" />
+				First Name: <input id="firstName" name="firstname" type="text" />
 			</div>
 			<div align="center">
-				Last Name: <input id="lastName" type="text" />
+				Last Name: <input id="lastName" name="lastname" type="text" />
 			</div>
 			<div align="center">
 				<input id="submit" type="submit" value="Save Person"/>

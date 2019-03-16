@@ -8,8 +8,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@EnableTransactionManagement
 public class DaoConfig {
 
     @Autowired
@@ -17,23 +21,28 @@ public class DaoConfig {
 
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
-	BasicDataSource dataSource = new BasicDataSource();
-	dataSource.setDriverClassName(environment.getProperty("jdbc.driverClassName"));
-	dataSource.setUrl(environment.getProperty("jdbc.url"));
-	dataSource.setUsername(environment.getProperty("jdbc.username"));
-	dataSource.setPassword(environment.getProperty("jdbc.password"));
-	dataSource.setMaxActive(100);
-	dataSource.setMaxWait(1000);
-	dataSource.setPoolPreparedStatements(true);
-	dataSource.setDefaultAutoCommit(false);
-	dataSource.setValidationQuery(environment.getProperty("jdbc.validationQuery"));
-	dataSource.setTestOnBorrow(true);
-	return dataSource;
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName(environment.getProperty("jdbc.driverClassName"));
+        dataSource.setUrl(environment.getProperty("jdbc.url"));
+        dataSource.setUsername(environment.getProperty("jdbc.username"));
+        dataSource.setPassword(environment.getProperty("jdbc.password"));
+        dataSource.setMaxActive(100);
+        dataSource.setMaxWait(1000);
+        dataSource.setPoolPreparedStatements(true);
+        dataSource.setDefaultAutoCommit(false);
+        dataSource.setValidationQuery(environment.getProperty("jdbc.validationQuery"));
+        dataSource.setTestOnBorrow(true);
+        return dataSource;
     }
 
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-	return new JdbcTemplate(dataSource);
+        return new JdbcTemplate(dataSource);
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
     }
 
 }

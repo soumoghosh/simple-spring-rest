@@ -1,5 +1,12 @@
 package com.swayam.demo.web.rest.dao;
 
-public class PersonDao {
+import java.util.List;
 
+import com.swayam.demo.web.rest.model.Person;
+
+public interface PersonDao {
+
+    List<Person> getPersons();
+
+    boolean savePerson(Person person);
 }
