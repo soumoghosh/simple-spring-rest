@@ -9,4 +9,9 @@ public interface PersonDao {
     List<Person> getPersons();
 
     boolean savePerson(Person person);
+
+
+	boolean deletePerson(int id);
+
+	List<Person> getAllPerson();
 }

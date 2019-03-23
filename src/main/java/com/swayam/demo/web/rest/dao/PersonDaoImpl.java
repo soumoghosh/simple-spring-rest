@@ -2,7 +2,10 @@ package com.swayam.demo.web.rest.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -49,5 +52,36 @@ public class PersonDaoImpl implements PersonDao {
          * if (row == 1) return true; else return false;
          */
     }
+	
+
+	@Override
+	public boolean deletePerson(int id) {
+		String delete = "delete from person where id ="+id +"";
+		int row = jdbctemplate.update(delete);
+		 return (row == 1);
+	}
+
+	@Override
+	public List<Person> getAllPerson() {
+		String allperson = "select * from person";
+		List<Person> lst = jdbctemplate.query(allperson,new RowMapper<Person>() {
+
+			@Override
+			public Person mapRow(ResultSet rs, int rownum) throws SQLException {
+				
+				Person person = new Person();
+				int id= rs.getInt("id");
+				person.setId(id);
+				String firstName= rs.getString("first_name");
+				person.setFirstname(firstName);
+				
+				
+				
+				return person;
+			}
+		});
+		return lst;
+		
+	}
 
 }
