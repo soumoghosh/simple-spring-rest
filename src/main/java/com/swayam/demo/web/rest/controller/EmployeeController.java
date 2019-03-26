@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.swayam.demo.web.rest.model.Employee;
-import com.swayam.demo.web.rest.service.EmployeeService;
+import com.swayam.demo.web.rest.service.*;
+import com.swayam.demo.web.rest.model.*;
 
 @Controller
 public class EmployeeController {
 
-	private final EmployeeService emplservice;
 	
+	private final EmployeeService emplservice;
 	@Autowired
 	public EmployeeController(EmployeeService emplservice) {
 		this.emplservice=emplservice;
