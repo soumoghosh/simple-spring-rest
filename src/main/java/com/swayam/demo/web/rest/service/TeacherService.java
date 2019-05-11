@@ -10,7 +10,6 @@ public interface TeacherService {
 	
 	public boolean deleteTeacher(int id);
 	
-	public boolean updateTeacher(Teacher teacher);
 	
 	public List<Teacher> getAllTeacher();
 	

@@ -15,4 +15,5 @@ public interface TeacherDao {
 	 List<Teacher> getAllTeacher();
 	
 	 Teacher getSingleTeacherDeatils(int id);
+	 boolean checkExistTeacher(int id);
 }

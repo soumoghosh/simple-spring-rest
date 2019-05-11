@@ -10,7 +10,7 @@
 </head>
 <body>
 	<h1>Add Teacher</h1>
-	<form:form  method="POST" commandName="employee">
+	<form:form  method="POST" commandName="teacher">
 		<div>
 		<div align="center">
 				Id: <form:input  path="id" />

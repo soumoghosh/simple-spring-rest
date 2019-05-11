@@ -21,7 +21,13 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	@Transactional
 	public boolean addTeacher(Teacher teacher) {
+		if (teacherdao.checkExistTeacher(teacher.getId()))
+		{
+			return teacherdao.updateTeacher(teacher);
+		}
+		else{
 		return teacherdao.addTeacher(teacher);
+		}
 	}
 
 	@Override
@@ -30,10 +36,6 @@ public class TeacherServiceImpl implements TeacherService{
 		return teacherdao.deleteTeacher(id);
 	}
 
-	@Override
-	public boolean updateTeacher(Teacher teacher) {
-		return teacherdao.updateTeacher(teacher);
-	}
 
 	@Override
 	public List<Teacher> getAllTeacher() {

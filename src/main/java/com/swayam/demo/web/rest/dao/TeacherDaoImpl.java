@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -16,7 +17,7 @@ import com.swayam.demo.web.rest.model.Teacher;
 public class TeacherDaoImpl implements TeacherDao {
 	
 	private final JdbcTemplate jdbctemplate;
-	
+	@Autowired
 	public TeacherDaoImpl(JdbcTemplate jdbcTemplate) {
             this.jdbctemplate=jdbcTemplate;
 	}
@@ -48,10 +49,10 @@ public class TeacherDaoImpl implements TeacherDao {
 	@Override
 	public List<Teacher> getAllTeacher() {
 		String allteacher = "select * from teacher";
-		List<Teacher> teacherlst = jdbctemplate.query(allteacher,new ResultSetExtractor<List<Teacher>>() {
+		List<Teacher> teacherlst = jdbctemplate.query(allteacher,new RowMapper<Teacher>() {
 			
 			
-			/*@Override
+			@Override
 			public Teacher mapRow(ResultSet rs, int rownum) throws SQLException {  // this maprow we can write in different class also we have to call that class
 				
 				Teacher emp = new Teacher();
@@ -65,9 +66,9 @@ public class TeacherDaoImpl implements TeacherDao {
 				
 				
 				return emp;
-			}*/
+			}
 
-			@Override
+			/*@Override
 			public List<Teacher> extractData(ResultSet rs) throws SQLException, DataAccessException {
 
 				List<Teacher> lst = new ArrayList<>();
@@ -78,7 +79,7 @@ public class TeacherDaoImpl implements TeacherDao {
 				lst.add(teacher1);
 				
 				return lst;
-			}
+			}*/
 		});
 		
 		return teacherlst;
@@ -87,7 +88,7 @@ public class TeacherDaoImpl implements TeacherDao {
 	@Override
 	public Teacher getSingleTeacherDeatils(int id) {
 		String oneteacher = "select * from teacher where id= ?";
-		Teacher teacher = (Teacher)jdbctemplate.queryForObject(oneteacher, new Object[]{id}, new RowMapper<Teacher>() {
+		Teacher teacher = (Teacher)jdbctemplate.query(oneteacher, new Object[]{id}, new RowMapper<Teacher>() {
 		
 			@Override
 			public Teacher mapRow(ResultSet rs, int rownum) throws SQLException {  // this maprow we can write in different class also we have to call that class
@@ -100,4 +101,15 @@ public class TeacherDaoImpl implements TeacherDao {
 		});
 		return teacher;
 }
+
+	@Override
+	public boolean checkExistTeacher(int id) {
+
+			String sql = "select count( *) from teacher where id= ?";
+			int count  = jdbctemplate.queryForObject(sql, Integer.class, id);//
+			
+			return count== 1; 
+				
+		
+	}
 }
